@@ -1,8 +1,7 @@
 import { Cabecalho } from './styled.js'
 
-export default function Cabe(){
 
-    
+export default function Cabe(){
 
     return (
         <Cabecalho>

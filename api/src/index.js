@@ -19,7 +19,7 @@ app.post('/produto', async (req, resp) => {
     if(d.produto == '')
       return resp.send({erro: "Campo nome é obrigatório"})
     
-    if(d.estoque == '')
+    if(d.estoque == null)
       return resp.send({erro: "Campo estoque é obrigatório"})
 
     if(d.produto >= 4)
