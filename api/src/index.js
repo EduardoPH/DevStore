@@ -31,8 +31,8 @@ app.post('/produto', async (req, resp) => {
     if(d.avaliacaoo < 0)
       return resp.send({erro: "A avaliação não aceita numeros negativos"})
 
-    if(d.avaliacao > 5)
-    return resp.send({erro: "A avaliação máxima é 5"})
+    if(d.avaliacao > 10)
+    return resp.send({erro: "A avaliação máxima é 10"})
 
     if(d.preco_de == '')
       return resp.send({erro: "Campo preço DE é obrigatório"})
@@ -74,14 +74,14 @@ app.delete('/produto/:id', async(req, resp) => {
   }
 })
 
-app.put('/produto/:id', async (req, resp) => {
-  let d = req.body;
-  var data = new Date();
+async function verification(d, resp) {
+
+  let user = await db.tb_produto.findOne({where: {nm_produto: d.produto}})
 
   if(d.produto == '')
       return resp.send({erro: "Campo nome é obrigatório"})
     
-    if(d.estoque == '')
+    if(d.estoque == null)
       return resp.send({erro: "Campo estoque é obrigatório"})
 
     if(d.produto >= 4)
@@ -93,8 +93,41 @@ app.put('/produto/:id', async (req, resp) => {
     if(d.avaliacaoo < 0)
       return resp.send({erro: "A avaliação não aceita numeros negativos"})
 
-    if(d.avaliacao > 5)
-    return resp.send({erro: "A avaliação máxima é 5"})
+    if(d.avaliacao > 10)
+    return resp.send({erro: "A avaliação máxima é 10"})
+
+    if(d.preco_de == '')
+      return resp.send({erro: "Campo preço DE é obrigatório"})
+
+    if(d.preco_por == '')
+      return resp.send({erro: "Campo Preço POR é obrigatório"})
+
+    if(d.descricao == '')
+      return resp.send({erro: "Campo descrição é obrigatório"})
+      
+}
+
+app.put('/produto/:id', async (req, resp) => {
+  let d = req.body;
+  var data = new Date();
+
+  if(d.produto == '')
+      return resp.send({erro: "Campo nome é obrigatório"})
+    
+    if(d.estoque == null)
+      return resp.send({erro: "Campo estoque é obrigatório"})
+
+    if(d.produto >= 4)
+      return resp.send({erro: "Campo nome tem que ter no mínimo 5 carácteres"})
+
+    if(d.categoria == '')
+      return resp.send({erro: "Campo categoria é obrigatório"})
+
+    if(d.avaliacaoo < 0)
+      return resp.send({erro: "A avaliação não aceita numeros negativos"})
+
+    if(d.avaliacao > 10)
+    return resp.send({erro: "A avaliação máxima é 10"})
 
     if(d.preco_de == '')
       return resp.send({erro: "Campo preço DE é obrigatório"})
